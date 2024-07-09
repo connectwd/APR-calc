@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Savings Account Calculator</title>
-    <meta name="description" content="Calculate the total value in a savings account with daily compounding interest. Enter your deposit details and get results instantly.">
+    <meta name="description" content="Use our Savings Account Calculator to estimate the growth of your investments with daily compounding interest. Enter your deposits, interest rate, and total duration to get instant results.">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Montserrat", sans-serif;
+            font-size: 1rem;
+            line-height: 1.5rem;
             margin: 0;
             padding: 20px;
             background-color: #f4f4f4;
         }
         h1 {
             text-align: center;
+            line-height: 2rem;
         }
         .content {
             max-width: 600px;
-            margin: 10px auto;
+            margin: 5px auto;
             background: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -31,13 +37,13 @@
             margin-bottom: 5px;
         }
         input[type="number"] {
-            width: calc(100% - 10px);
-            padding: 8px;
-            margin: 0 5px;
+            width: 100%;
+            padding: 8px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
         button {
+            min-width: 1rem;
             background: #007BFF;
             color: #fff;
             border: none;
@@ -84,14 +90,20 @@
         .toggle-buttons {
             margin-top: 20px;
         }
+        .download-buttons {
+            margin-top: 20px;
+        }
+        @media print {
+            .toggle-buttons, .download-buttons {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
     <h1>Savings Account Calculator</h1>
     <div class="content">
-        <p>This calculator helps you estimate the total value of a savings account with daily compounding interest. 
-        Enter your initial and subsequent deposits along with the number of days for each. 
-        Specify the total duration and annual interest rate to see the growth of your investments.</p>
+        <p>Welcome to our Savings Account Calculator! This powerful tool is designed to help you estimate the growth of your savings with daily compounding interest. Simply enter: <ul> <li>Initial deposit amount</li><li>Subsequent deposit amount</li> <li>Number of days between each deposit</li><li>The annual interest rate (APR)</li><li>Total time in days you want to calculate the interest for</li></ul>Our calculator will instantly show you how your investments will grow over time. Whether you're planning for the future or just curious about the potential of your savings, our calculator provides accurate and easy-to-understand results. Start maximizing your savings today!</p>
     </div>
     <form id="savingsForm" class="content" aria-labelledby="formTitle">
         <div class="form-group">
@@ -100,7 +112,7 @@
         </div>
         <div id="depositInputs">
             <div class="form-group">
-                <label for="deposit1Amount">Deposit 1 Amount:</label>
+                <label for="deposit1Amount">First Deposit Amount:</label>
                 <input type="number" step="0.01" id="deposit1Amount" required>
                 <label for="daysAfterPrevious1">Days after previous deposit (0 for first deposit):</label>
                 <input type="number" id="daysAfterPrevious1" disabled value="0" required>
@@ -121,6 +133,9 @@
             <button onclick="showTable()">Show Table</button>
             <button onclick="showJSON()">Show JSON</button>
             <button onclick="downloadCSV()">Download as CSV</button>
+        </div>
+        <div class="download-buttons">
+            <button onclick="printResults()">Print Results</button>
         </div>
         <pre id="resultsContent"></pre>
         <table id="resultsTable"></table>
@@ -208,7 +223,7 @@
 
         function downloadCSV() {
             const results = JSON.parse(document.getElementById('resultsContent').textContent);
-            let csvContent = "Deposit Number,Initial Amount,Final Amount,Interest Earned\n";
+            let csvContent = "Deposit #,Initial Amount,Final Amount,Interest Earned\n";
             results.contributions.forEach((contribution, index) => {
                 csvContent += `${index + 1},${contribution.initialAmount.toFixed(2)},${contribution.finalAmount.toFixed(2)},${contribution.interestEarned.toFixed(2)}\n`;
             });
@@ -222,6 +237,17 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+        }
+
+        function printResults() {
+            const results = document.getElementById('results');
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Print Results</title>');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(results.innerHTML);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
         }
 
         document.getElementById('savingsForm').addEventListener('submit', function(event) {
