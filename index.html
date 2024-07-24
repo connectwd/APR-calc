@@ -1,109 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <title>Savings Account Calculator</title>
-    <meta name="description" content="Use our Savings Account Calculator to estimate the growth of your investments with daily compounding interest. Enter your deposits, interest rate, and total duration to get instant results.">
-    <style>
-        body {
-            font-family: "Montserrat", sans-serif;
-            font-size: 1rem;
-            line-height: 1.5rem;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            text-align: center;
-            line-height: 2rem;
-        }
-        .content {
-            max-width: 600px;
-            margin: 5px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .form-group {
-            margin: 15px auto;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="number"] {
-            width: 100%;
-            padding: 8px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            min-width: 1rem;
-            background: #007BFF;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        #results {
-            max-width: 600px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-        pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        .error {
-            color: red;
-            margin-top: 10px;
-        }
-        .summary {
-            margin-top: 20px;
-        }
-        .toggle-buttons {
-            margin-top: 20px;
-        }
-        .download-buttons {
-            margin-top: 20px;
-        }
-        @media print {
-            .toggle-buttons, .download-buttons {
-                display: none;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Compound Interest Calculator | Calculate Your Savings Growth</title>
+    <meta name="description" content="Use our Compound Interest Calculator to estimate the growth of your investments with daily compounding interest. Start maximizing your savings today!">
+    <meta name="google-site-verification" content="YvgkmOgHgiKQDzy0nrWv92WKjy_VCAOLcStR71X_0eQ" />
+    <meta property="og:title" content="Compound Interest Calculator | Calculate Your Savings Growth">
+    <meta property="og:description" content="Use our Compound Interest Calculator to estimate the growth of your investments with daily compounding interest. Start maximizing your savings today!">
+    <meta property="og:image" content="https://www.yourwebsite.com/images/og-image.jpg">
+    <meta property="og:url" content="https://www.yourwebsite.com">
+    <meta property="og:type" content="website">
 </head>
+
 <body>
-    <h1>Savings Account Calculator</h1>
+    <h1>Compound Interest Calculator</h1>
     <div class="content">
-        <p>Welcome to our Savings Account Calculator! This powerful tool is designed to help you estimate the growth of your savings with daily compounding interest. Simply enter: <ul> <li>Initial deposit amount</li><li>Subsequent deposit amount</li> <li>Number of days between each deposit</li><li>The annual interest rate (APR)</li><li>Total time in days you want to calculate the interest for</li></ul>Our calculator will instantly show you how your investments will grow over time. Whether you're planning for the future or just curious about the potential of your savings, our calculator provides accurate and easy-to-understand results. Start maximizing your savings today!</p>
+        <p>Maximise Your Savings: Unlocking the Secrets of APY and Interest Calculations for Your Savings Account</p>
+        <button type="button" class="collapsible">How it works</button>
+        <div class="content-collapsible">
+            <p>This powerful tool is designed to help you estimate the growth of your savings with daily compounding interest. Simply enter:</p>
+            <ul>
+                <li>Initial deposit amount</li>
+                <li>Subsequent deposit amount</li>
+                <li>Number of days between each deposit</li>
+                <li>The annual interest rate (APR)</li>
+                <li>Total time in days you want to calculate the interest for</li>
+            </ul>
+            <p>Our calculator will instantly show you how your investments will grow over time. Whether you're planning for the future or just curious about the potential of your savings, our calculator provides accurate and easy-to-understand results. Start maximizing your savings today!</p>
+        </div>
     </div>
     <form id="savingsForm" class="content" aria-labelledby="formTitle">
         <div class="form-group">
@@ -231,24 +162,79 @@
             const blob = new Blob([csvContent], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.setAttribute('hidden', '');
             a.setAttribute('href', url);
-            a.setAttribute('download', 'savings_results.csv');
-            document.body.appendChild(a);
+            a.setAttribute('download', 'results.csv');
             a.click();
-            document.body.removeChild(a);
         }
 
         function printResults() {
-            const results = document.getElementById('results');
+            const printContent = document.getElementById('results').innerHTML;
             const printWindow = window.open('', '', 'height=600,width=800');
             printWindow.document.write('<html><head><title>Print Results</title>');
-            printWindow.document.write('</head><body >');
-            printWindow.document.write(results.innerHTML);
+            printWindow.document.write('<link rel="stylesheet" href="styles.css">');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write(printContent);
             printWindow.document.write('</body></html>');
             printWindow.document.close();
             printWindow.print();
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const collapsibles = document.querySelectorAll('.collapsible');
+            collapsibles.forEach(function(collapsible) {
+                collapsible.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+            });
+
+            // Example Calculation Output
+            const exampleDeposits = [
+                [1000, 0],
+                [500, 30],
+                [200, 60]
+            ];
+            const exampleTotalDays = 90;
+            const exampleAnnualInterestRate = 5 / 100;
+
+            const exampleResults = calculateSavings(exampleDeposits, exampleTotalDays, exampleAnnualInterestRate);
+            const summary = document.getElementById('summary');
+            summary.innerHTML = `
+                <p><strong>Total Initial Deposits:</strong> £${exampleResults.initialTotal.toFixed(2)}</p>
+                <p><strong>Total Final Amount:</strong> £${exampleResults.totalValue.toFixed(2)}</p>
+                <p><strong>Total Interest Earned:</strong> £${exampleResults.totalInterestEarned.toFixed(2)}</p>
+            `;
+
+            const resultsContent = document.getElementById('resultsContent');
+            resultsContent.textContent = JSON.stringify(exampleResults, null, 2);
+
+            const resultsTable = document.getElementById('resultsTable');
+            resultsTable.innerHTML = `
+                <tr>
+                    <th>Deposit #</th>
+                    <th>Initial Amount</th>
+                    <th>Final Amount</th>
+                    <th>Interest Earned</th>
+                </tr>
+            `;
+            exampleResults.contributions.forEach((contribution, index) => {
+                const row = resultsTable.insertRow();
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${contribution.initialAmount.toFixed(2)}</td>
+                    <td>${contribution.finalAmount.toFixed(2)}</td>
+                    <td>${contribution.interestEarned.toFixed(2)}</td>
+                `;
+            });
+
+            document.getElementById('results').style.display = 'block';
+            showTable(); // Default to table view
+        });
 
         document.getElementById('savingsForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -301,4 +287,5 @@
         });
     </script>
 </body>
+
 </html>
